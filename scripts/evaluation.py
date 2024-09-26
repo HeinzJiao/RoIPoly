@@ -16,7 +16,7 @@ Arguments:
                  - "ciou"          : Complex IoU evaluation.
 
 Example:
-    python eval_metrics.py --gt-file ./data/ground_truth.json --dt-file ./data/predictions.json --eval-type coco_iou
+    python evaluation.py --gt-file ./data/ground_truth.json --dt-file ./data/predictions.json --eval-type coco_iou
 """
 import argparse
 import sys
