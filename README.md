@@ -37,6 +37,14 @@ To install the remaining dependencies, run:
 pip install -r requirements.txt
 ```
 
+#### 5. Compile Deformable-Attention Modules (from [Deformable-DETR](https://github.com/fundamentalvision/Deformable-DETR))
+To compile the deformable attention modules, navigate to the ops directory and execute the following:
+```
+cd roipoly/ops
+sh make.sh
+```
+
+
 #### 5. Compile Deformable-Attention Modules (from Deformable-DETR)
 
 
