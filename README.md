@@ -4,7 +4,7 @@ The code is currently being organized and will be uploaded soon.
 
 ## Environment Setup
 
-### 1. Create Conda Environment (Recommended)
+#### 1. Create Conda Environment (Recommended)
 To begin, create and activate a new conda environment for this project:
 
 ```
