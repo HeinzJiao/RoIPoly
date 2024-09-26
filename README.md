@@ -22,7 +22,7 @@ pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pyt
 #### 3. Install Detectron2
 Follow the official [Detectron2 installation guide](https://github.com/facebookresearch/detectron2/tree/main) for installation instructions.
 
-If you encounter any issues during installation, you can directly download the detectron2 folder and place it under the RoIPoly directory. The final structure should look like this:
+If you encounter any issues during installation, you can directly download the [detectron2](https://github.com/ywyue/RoomFormer/tree/main/detectron2) folder and place it under the RoIPoly directory. The final structure should look like this:
 
 ```
 RoIPoly/
@@ -43,8 +43,3 @@ To compile the deformable attention modules, navigate to the ops directory and e
 cd roipoly/ops
 sh make.sh
 ```
-
-
-#### 5. Compile Deformable-Attention Modules (from Deformable-DETR)
-
-
