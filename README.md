@@ -31,7 +31,10 @@ RoIPoly/
 ├── other files...
 ```
 
-#### 4. Install Required Packages
+#### 4. Install Boundary IoU API
+Follow the official [Boundary IoU API installation guide](https://github.com/bowenc0221/boundary-iou-api) for installation instructions.
+
+#### 5. Install Required Packages
 To install the remaining dependencies, run:
 ```
 pip install -r requirements.txt
