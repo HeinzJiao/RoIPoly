@@ -56,7 +56,7 @@ sh make.sh
 ## Training the model
 #### To train the model, use the following command:
 ```
-CUDA_VISIBLE_DEVICES=<gpu_ids> python3 train_net.py --num-gpus <number_of_gpus> --config-file <path_to_config_file>
+CUDA_VISIBLE_DEVICES=<gpu_ids> python3 train_net.py --num-gpus <number_of_gpus> --config-file <path_to_config_file> --dataset-name <dataset_name> --train-json <path_to_annotation_json> --train-path <path_to_training_images>
 ```
 
 #### Arguments:
@@ -65,9 +65,12 @@ CUDA_VISIBLE_DEVICES=<gpu_ids> python3 train_net.py --num-gpus <number_of_gpus> 
   - If not set, the first available GPU will be used by default.
 - --num-gpus: This argument specifies how many GPUs to use during training. Set --num-gpus <number_of_gpus> to define the number of GPUs. For example, --num-gpus 1 for single-GPU training and --num-gpus 2 for two GPUs.
 - --config-file: Path to the configuration file that contains model-specific parameters, dataset paths, and other training settings. Replace <path_to_config_file> with the actual path to your configuration file.
+- --dataset-name: The name of the dataset being used. Default is aicrowd_train, but you can change it to your own dataset name.
+- --train-json: Path to the training dataset's annotation file in COCO format. Replace <path_to_annotation_json> with the path to your dataset's annotation JSON file.
+- --train-path: Path to the folder containing training images. Replace <path_to_training_images> with the actual path to your dataset's images.
 
 #### Example:
 If you want to train a model using the **Swin-Base Transformer** as the backbone on the **CrowdAI Small-Medium dataset**, you can execute the following command:
 ```
-CUDA_VISIBLE_DEVICES=0 python3 train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml
+CUDA_VISIBLE_DEVICES=0 python3 train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml --dataset-name crowdai_train --train-json ../../data/crowdai/train/annotation_sm_clean_us_index.json --train-path ../../data/crowdai/train/images
 ```
