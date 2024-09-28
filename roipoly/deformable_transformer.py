@@ -32,11 +32,6 @@ from torch import nn, Tensor
 from torch.nn.init import xavier_uniform_, constant_, uniform_, normal_
 from util.misc import inverse_sigmoid
 from .ops.modules import MSDeformAttn
-import argparse
-import numpy as np
-import time
-import cv2, json
-from head import MLP
 
 
 class DeformableTransformer(nn.Module):
