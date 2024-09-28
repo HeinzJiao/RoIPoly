@@ -12,7 +12,7 @@ from detectron2.modeling import META_ARCH_REGISTRY, build_backbone
 from detectron2.structures import Boxes, ImageList, Instances
 from .loss import SetCriterion, HungarianMatcher
 from .head import DynamicHead
-from .util.misc import (NestedTensor, nested_tensor_from_tensor_list)
+from util.misc import (NestedTensor, nested_tensor_from_tensor_list)
 
 __all__ = ["RoIPoly"]
 
