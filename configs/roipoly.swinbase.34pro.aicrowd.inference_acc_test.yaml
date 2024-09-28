@@ -1,5 +1,0 @@
-_BASE_: "sparsercnn.swinbase_whu.yaml"
-MODEL:
-  WEIGHTS: "output/model_final_stage_2.pth"
-DATASETS:
-  TEST: ("aicrowd_test",)
