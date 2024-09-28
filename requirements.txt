@@ -1,4 +1,4 @@
-numpy==1.21.6
+numpy==1.22.0
 opencv_python==4.7.0.72
 scipy==1.7.3
 Shapely==1.8.2
@@ -20,4 +20,5 @@ pandas==2.0.3
 seaborn==0.13.2
 timm==0.5.4
 omegaconf==2.3.0
+fairscale==0.4.13
 
