@@ -19,4 +19,5 @@ fvcore==0.1.5.post20221221
 pandas==2.0.3
 seaborn==0.13.2
 timm==0.5.4
+omegaconf==2.3.0
 
