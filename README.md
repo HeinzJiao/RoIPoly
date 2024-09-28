@@ -19,6 +19,12 @@ Install the specific version of PyTorch compatible with CUDA 11.1:
 pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
+If you're using CUDA 12.x (e.g., CUDA 12.4), you'll need to install the nightly version of PyTorch, as the stable release doesn't yet support CUDA 12.4. Use the following command to install PyTorch with CUDA 12.1 support:
+
+```
+pip install torch torchvision torchaudio --pre --index-url https://download.pytorch.org/whl/nightly/cu121
+```
+
 #### 3. Install Detectron2
 Follow the official [Detectron2 installation guide](https://github.com/facebookresearch/detectron2/tree/main) for installation instructions.
 
