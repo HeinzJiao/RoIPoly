@@ -21,4 +21,5 @@ seaborn==0.13.2
 timm==0.5.4
 omegaconf==2.3.0
 fairscale==0.4.13
+future==1.0.0
 
