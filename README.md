@@ -72,5 +72,5 @@ CUDA_VISIBLE_DEVICES=<gpu_ids> python3 train_net.py --num-gpus <number_of_gpus> 
 #### Example:
 If you want to train a model using the **Swin-Base Transformer** as the backbone on the **CrowdAI Small-Medium dataset**, you can execute the following command:
 ```
-CUDA_VISIBLE_DEVICES=0 python3 train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml --dataset-name crowdai_train --train-json ../../data/crowdai/train/annotation_sm_clean_us_index.json --train-path ../../data/crowdai/train/images
+CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml --dataset-name crowdai_train --train-json ../../data/crowdai/train/annotation_sm_clean_us_index.json --train-path ../../data/crowdai/train/images
 ```
