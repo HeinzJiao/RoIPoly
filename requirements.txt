@@ -16,6 +16,7 @@ yacs==0.1.8
 data_preprocessing==0.0.2
 fvcore==0.1.5.post20221221
 pandas==2.0.3
+opencv-python==4.10.0.84
 seaborn==0.13.2
 timm==0.5.4
 omegaconf==2.3.0
