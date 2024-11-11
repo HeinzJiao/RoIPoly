@@ -68,3 +68,11 @@ If you want to train a model using the **Swin-Base Transformer** as the backbone
 ```
 CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml --dataset-name crowdai_train --train-json ./data/crowdai/train/annotation_sm_clean_us_index.json --train-path ./data/crowdai/train/images
 ```
+
+## Status
+
+The remaining code is currently being organized and will be uploaded soon. Stay tuned for updates!
+
+## Coming Soon
+
+- Complete inference pipelines
