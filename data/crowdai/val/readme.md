@@ -50,4 +50,4 @@ Changes made:
 - Ensured the image IDs match those in annotation_clean.json.
 
 ## Note
-As the original CrowdAI dataset contains some degraded polygon annotations (e.g., with less than 3 vertices or very small area), we followed the common practice in the evaluation code of FFL [here] (https://github.com/Lydorn/Polygonization-by-Frame-Field-Learning) and applied minimal filtering to reduce the impact of annotation noise on evaluation.
+As the original CrowdAI dataset contains some degraded polygon annotations (e.g., with less than 3 vertices or very small area), we followed the common practice in the evaluation code of FFL [here](https://github.com/Lydorn/Polygonization-by-Frame-Field-Learning) and applied minimal filtering to reduce the impact of annotation noise on evaluation.
