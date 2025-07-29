@@ -47,6 +47,15 @@ cd roipoly/ops
 sh make.sh
 ```
 
+## Data Preprocessing
+
+To minimize training time, we have preprocessed the CrowdAI dataset by localizing the polygon padding process to ensure a fixed number of vertices per polygon, reducing the need for on-the-fly computation during training. For detailed information on the polygon padding process, please refer to Section 3.1 "Reformulation of Building Polygon Prediction" in the paper. 
+
+The preprocessed training set based on the CrowdAI dataset can be downloaded [here](https://drive.google.com/drive/folders/1w31WaJaismYLhex2unBnP5cdTImZw6CK?usp=sharing).
+
+Please refer to the README file in the folder for instructions on how each annotation file was generated, including the preprocessing commands and specific steps applied.
+By default, the annotation files with the _index suffix are used, which correspond to the ordering-based matching method described in Section 3.1. This method performs uniform sampling of a fixed number of vertices from each polygon, ensures that all original vertices are retained among the sampled ones, and assigns a class label to each vertex.
+
 ## Training the model
 #### To train the model, use the following command:
 ```
@@ -68,6 +77,18 @@ If you want to train a model using the **Swin-Base Transformer** as the backbone
 ```
 CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml --dataset-name crowdai_train --train-json ./data/crowdai/train/annotation_sm_clean_us_index.json --train-path ./data/crowdai/train/images
 ```
+
+## 🔍 Tips for Using This Repository
+
+1. **ROI Generation Strategy**  
+   - During training, we use **ground-truth bounding boxes** to provide region proposals (RoIs).  
+   - During inference, RoIs are obtained from a **pretrained object detector**.
+
+2. **Polygon Size Partitioning (for CrowdAI Dataset)**  
+   - In training, we split the CrowdAI dataset into **small-medium** polygons and **large** polygons.  
+   - This design is **purely due to limited computational resources**, not model performance considerations.  
+   - Without this split, we would need to set a very large `num_proposal_vertices_per_polygon` to handle complex large polygons, which would significantly increase memory and computation cost.  
+   - ⚠️ **If you have sufficient computing resources, we do not recommend applying this split.**
 
 ## Status
 
