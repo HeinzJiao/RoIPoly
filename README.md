@@ -1,7 +1,5 @@
 # RoIPoly
 
-The code is currently being organized and will be uploaded soon.
-
 ## Environment Setup
 
 #### 1. Create Conda Environment (Recommended)
@@ -83,8 +81,5 @@ CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file c
 
 ## Status
 
-The remaining code is currently being organized and will be uploaded soon. Stay tuned for updates!
-
-## Coming Soon
-
+The remaining code is currently being organized and will be uploaded soon.
 - Complete inference pipelines
