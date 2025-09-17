@@ -79,7 +79,5 @@ CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file c
    - Without this split, we would need to set a very large `num_proposal_vertices_per_polygon` to handle complex large polygons, which would significantly increase memory and computation cost.  
    - ⚠️ **If you have sufficient computing resources, we do not recommend applying this split.**
 
-## Status
-
-The remaining code is currently being organized and will be uploaded soon.
-- Complete inference pipelines
+## Inference
+- scripts/evaluate.py
