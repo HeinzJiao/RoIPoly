@@ -81,3 +81,12 @@ CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file c
 
 ## Inference
 - scripts/evaluate.py
+
+## 🚀 New Paper Alert
+
+This repository is part of a broader research effort on vectorized object outline extraction for large-scale topographic map generation. Check out our latest publications:
+
+- **LDPoly: Latent diffusion for polygonal road outline extraction in large-scale topographic mapping**  
+  *ISPRS Journal of Photogrammetry and Remote Sensing*, 2025  
+  📄 [Paper (DOI)](https://doi.org/10.1016/j.isprsjprs.2025.10.005) ｜ 💻 [Code & Pretrained Models & Dataset](https://github.com/HeinzJiao/LDPoly)  
+  → *The first generative framework and benchmark for polygonal road outline extraction.*
