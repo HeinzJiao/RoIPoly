@@ -1,92 +1,105 @@
-# RoIPoly
+<div align="center">
+  <h1>RoIPoly: Vectorized Building Outline Extraction Using Vertex and Logit Embeddings</h1>
+  <p><strong>RoIPoly</strong> is a RoI query-based framework for efficient polygonal building outline extraction with strong vertex interaction and no redundant-vertex post-processing.</p>
+  <p>
+    <a href="https://doi.org/10.1016/j.isprsjprs.2025.03.030"><img src="https://img.shields.io/badge/ISPRS-2025-0A66C2" alt="ISPRS 2025"></a>
+    <a href="https://github.com/HeinzJiao/RoIPoly"><img src="https://img.shields.io/badge/Code-GitHub-black" alt="GitHub"></a>
+  </p>
+</div>
+
+## Overview
+
+RoIPoly formulates each polygon vertex as a query and constrains attention to the most relevant Region-of-Interest features of each building. Together with the proposed learnable logit embedding, this design improves vertex classification quality and removes the need for redundant-vertex post-processing.
 
 ## Environment Setup
 
-#### 1. Create Conda Environment (Recommended)
-To begin, create and activate a new conda environment for this project:
+### 1. Create a Conda Environment
 
-```
+```bash
 conda create -n roipoly python=3.8
 conda activate roipoly
 ```
 
-#### 2. Install PyTorch
-Install the specific version of PyTorch compatible with CUDA 11.1:
+### 2. Install PyTorch
 
-```
+```bash
 pip install torch==1.9.0+cu111 torchvision==0.10.0+cu111 -f https://download.pytorch.org/whl/torch_stable.html
 ```
 
-#### 3. Install Detectron2
-Follow the official [Detectron2 installation guide](https://github.com/facebookresearch/detectron2/tree/main) for installation instructions.
+### 3. Install Detectron2
 
-If you encounter any issues during installation, you can directly download the [detectron2](https://github.com/ywyue/RoomFormer/tree/main/detectron2) folder and place it under the RoIPoly directory. The final structure should look like this:
+Follow the official [Detectron2 installation guide](https://github.com/facebookresearch/detectron2/tree/main).
 
-```
-RoIPoly/
-│
-├── detectron2/
-├── other files...
-```
+If installation is problematic, you can also download the [detectron2 fork from RoomFormer](https://github.com/ywyue/RoomFormer/tree/main/detectron2) and place it directly under the `RoIPoly` directory.
 
-#### 4. Install Boundary IoU API
-Follow the official [Boundary IoU API installation guide](https://github.com/bowenc0221/boundary-iou-api) for installation instructions.
+### 4. Install Boundary IoU API
 
-#### 5. Install Required Packages
-To install the remaining dependencies, run:
-```
+Follow the official [Boundary IoU API installation guide](https://github.com/bowenc0221/boundary-iou-api).
+
+### 5. Install Remaining Dependencies
+
+```bash
 pip install -r requirements.txt
 ```
 
-#### 6. Compile Deformable-Attention Modules (from [Deformable-DETR](https://github.com/fundamentalvision/Deformable-DETR))
-To compile the deformable attention modules, navigate to the ops directory and execute the following:
-```
+### 6. Compile Deformable Attention Modules
+
+```bash
 cd roipoly/ops
 sh make.sh
 ```
 
-## Training the model
-#### To train the model, use the following command:
-```
+## Training
+
+Train the model with:
+
+```bash
 CUDA_VISIBLE_DEVICES=<gpu_ids> python3 train_net.py --num-gpus <number_of_gpus> --config-file <path_to_config_file> --dataset-name <dataset_name> --train-json <path_to_annotation_json> --train-path <path_to_training_images>
 ```
 
-#### Arguments:
-- CUDA_VISIBLE_DEVICES (optional): This environment variable is used to specify which GPU(s) to use. For example, CUDA_VISIBLE_DEVICES=1 makes the second GPU (index 1) available for training.
-  - If you want to use multiple GPUs, you can specify them like CUDA_VISIBLE_DEVICES=0,1,2.
-  - If not set, the first available GPU will be used by default.
-- --num-gpus: This argument specifies how many GPUs to use during training. Set --num-gpus <number_of_gpus> to define the number of GPUs. For example, --num-gpus 1 for single-GPU training and --num-gpus 2 for two GPUs.
-- --config-file: Path to the configuration file that contains model-specific parameters, dataset paths, and other training settings. Replace <path_to_config_file> with the actual path to your configuration file.
-- --dataset-name: The name of the dataset being used. Default is aicrowd_train, but you can change it to your own dataset name.
-- --train-json: Path to the training dataset's annotation file in COCO format. Replace <path_to_annotation_json> with the path to your dataset's annotation JSON file.
-- --train-path: Path to the folder containing training images. Replace <path_to_training_images> with the actual path to your dataset's images.
+Example:
 
-#### Example:
-If you want to train a model using the **Swin-Base Transformer** as the backbone on the **CrowdAI Small-Medium dataset**, you can execute the following command:
-```
+```bash
 CUDA_VISIBLE_DEVICES=1 python3 scripts/train_net.py --num-gpus 1 --config-file configs/roipoly.res50.34pro.aicrowd.yaml --dataset-name crowdai_train --train-json ./data/crowdai/train/annotation_sm_clean_us_index.json --train-path ./data/crowdai/train/images
 ```
 
-## 🔍 Tips for Using This Repository
+## Practical Notes
 
-1. **ROI Generation Strategy**  
-   - During training, we use **ground-truth bounding boxes** to provide region proposals (RoIs).  
-   - During inference, RoIs are obtained from a **pretrained object detector**.
-
-2. **Polygon Size Partitioning (for CrowdAI Dataset)**  
-   - In training, we split the CrowdAI dataset into **small-medium** polygons and **large** polygons.  
-   - This design is **purely due to limited computational resources**, not model performance considerations.  
-   - Without this split, we would need to set a very large `num_proposal_vertices_per_polygon` to handle complex large polygons, which would significantly increase memory and computation cost.  
-   - ⚠️ **If you have sufficient computing resources, we do not recommend applying this split.**
+1. During training, RoIPoly uses ground-truth bounding boxes as proposal RoIs.
+2. For the results reported in the paper, proposal RoIs at inference time are provided by a Sparse R-CNN detector trained on the CrowdAI dataset.
+3. For the results reported in the paper, the CrowdAI dataset is split into `small-medium` and `large` subsets, the model is trained separately on the two subsets, and the final predictions on the full dataset are obtained by merging the predictions from the two corresponding models.
+4. This subset-based training strategy is adopted purely because of limited computational resources. If sufficient memory and compute are available, we recommend training directly on the complete CrowdAI dataset instead of splitting it into subsets.
 
 ## Inference
-- scripts/evaluate.py
 
-## 🚀 New Paper Alert
+Inference and evaluation utilities are provided in `scripts/evaluate.py`.
 
-This repository is part of a broader research effort on vectorized object outline extraction for large-scale topographic map generation. Check out our latest publications:
+## Citation
 
-- **LDPoly: Latent diffusion for polygonal road outline extraction in large-scale topographic mapping**  
-  *ISPRS Journal of Photogrammetry and Remote Sensing*, 2025  
-  📄 [Paper (DOI)](https://doi.org/10.1016/j.isprsjprs.2025.10.005) ｜ 💻 [Code & Pretrained Models & Dataset](https://github.com/HeinzJiao/LDPoly)  
-  → *The first generative framework and benchmark for polygonal road outline extraction.*
+If you find RoIPoly useful in your research, please consider citing:
+
+```bibtex
+@article{jiao2025roipoly,
+  title={RoIPoly: Vectorized building outline extraction using vertex and logit embeddings},
+  author={Jiao, Weiqin and Cheng, Hao and Vosselman, George and Persello, Claudio},
+  journal={ISPRS Journal of Photogrammetry and Remote Sensing},
+  volume={224},
+  pages={317--328},
+  year={2025},
+  publisher={Elsevier}
+}
+```
+
+## Related Research
+
+This repository belongs to a broader research line on polygonal vectorization from aerial imagery and large-scale topographic map generation. If RoIPoly is relevant to your work, you may also want to follow the companion papers below.
+
+| Paper | Venue | Focus | Resources |
+| --- | --- | --- | --- |
+| **ACPV-Net** | CVPR 2026 | All-class polygonal vectorization and topology-aware vector basemap generation from a single aerial image. | [Paper](https://arxiv.org/abs/2603.16616) · [Code](https://github.com/HeinzJiao/ACPV-Net) · [Data](https://huggingface.co/datasets/HeinzJiao/Deventer-512) · [Weights](https://huggingface.co/HeinzJiao/deventer512_vmamba-s_m_vh-ldm_kl4_b8) |
+| **LDPoly** | ISPRS 2025 | Latent diffusion for polygonal road outline extraction in topographic mapping. | [Paper](https://doi.org/10.1016/j.isprsjprs.2025.10.005) · [Code](https://github.com/HeinzJiao/LDPoly) · [Data and Weights](https://drive.google.com/drive/folders/1jsjuZxFdU9a8q-m0TNCj1MfX9rixTYJl?usp=sharing) · [Demo](https://colab.research.google.com/drive/1IW5AGfn3w3y9wSquYgXolGhcVwIWkoNd#scrollTo=eval_run) |
+| **PolyR-CNN** | ISPRS 2024 | End-to-end polygonal building outline extraction with efficient RoI-based modeling. | [Paper](https://doi.org/10.1016/j.isprsjprs.2024.10.006) · [Code](https://github.com/HeinzJiao/PolyR-CNN) |
+
+## Acknowledgements
+
+This repository benefits from the excellent open-source contributions of [Sparse R-CNN](https://github.com/PeizeSun/SparseR-CNN), [Deformable DETR](https://github.com/fundamentalvision/Deformable-DETR), and [RoomFormer](https://github.com/ywyue/RoomFormer). We thank the authors for their great work.
